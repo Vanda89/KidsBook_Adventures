@@ -4,27 +4,49 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+datasource db {
+  provider     = "mongodb"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
-}
-
 model User {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  name  String
-  email String @unique
-  books Book[]
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  email       String   @unique
+  password    String
+  dateOfBirth DateTime
+  books       Book[]   @relation("UserBook")
 }
 
 model Book {
-  id  String @id @default(auto()) @map("_id") @db.ObjectId
-  slug String @unique
-  title String
-  body String
-  author   User      @relation(fields: [authorId], references: [id])
-  authorId String    @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug      String   @unique
+  title     String
+  body      String
+  cover     String
+  createdAt DateTime @default(now())
+  author    User     @relation("UserBook", fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String   @db.ObjectId
+  pages     Page[]   @relation("BookPages")
+}
+
+model Page {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  pageNumber Int
+  content    String
+  images     Image[] @relation("PageImages")
+  book       Book    @relation("BookPages", fields: [bookId], references: [id], onDelete: Cascade)
+  bookId     String  @db.ObjectId
+}
+
+model Image {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  url    String
+  page   Page   @relation("PageImages", fields: [pageId], references: [id])
+  pageId String @db.ObjectId
 }
