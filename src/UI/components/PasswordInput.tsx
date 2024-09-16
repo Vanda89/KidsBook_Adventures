@@ -9,35 +9,49 @@ interface PasswordInputProps extends InputProps {
   placeholder: string;
   register: UseFormRegisterReturn;
   error?: string;
+  ariaErrormessage?: string;
 }
 
-const PasswordInput: React.FC<PasswordInputProps> = ({ label, ariaLabel, placeholder, register, error }) => {
+const PasswordInput: React.FC<PasswordInputProps> = ({
+  label,
+  ariaLabel,
+  placeholder,
+  register,
+  error,
+  ariaErrormessage,
+}) => {
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
   const toggleVisibility = () => setPasswordVisibility(!passwordVisibility);
 
+  const labelStyle = 'font-bold mb-2 group-data-[filled-within=true]:text-content1';
+  const inputStyle = 'font-600 text-base group-data-[has-value=true]:text-content1  placeholder:text-sm';
+  const errorMessage = 'text-rose-500 text-xs ml-1 mt-1.5';
+
   return (
-    <div id="password">
+    <div className="password flex group flex-col gap-2">
       <Input
         isRequired
         classNames={{
-          label: 'font-bold mb-2',
-          input: 'font-600 text-base',
-          errorMessage: 'text-rose-500 text-xs ml-1 mt-1.5',
+          label: labelStyle,
+          input: inputStyle,
+          errorMessage: errorMessage,
+          inputWrapper: ' border-secondary-200',
         }}
         type={passwordVisibility ? 'text' : 'password'}
         label={label}
         aria-label={ariaLabel}
         placeholder={placeholder}
+        aria-errormessage={ariaErrormessage}
         endContent={
           <button
-            className="focus:outline-none"
+            className="focus:outline-none hover:text-white"
             type="button"
             onClick={toggleVisibility}
             aria-label="Modification de la visibilité du mot de passe">
             {passwordVisibility ? (
-              <FaEye className="text-2xl text-default-400 pointer-events-none" />
+              <FaEye className="text-2xl text-secondary-300 group-hover:fill-content1 " />
             ) : (
-              <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
+              <FaEyeSlash className="text-2xl text-secondary-300 group-hover:fill-content1  " />
             )}
           </button>
         }
