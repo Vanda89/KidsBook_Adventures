@@ -3,25 +3,13 @@ import type { Metadata } from 'next';
 import { jua, nunito } from '../../public/assets/fonts/fonts';
 import { Header } from '@/UI/components/layout/Header';
 import AuthProvider from '@/UI/components/auth-provider/AuthProvider';
-import type { ReactNode } from 'react';
 import { NextUIProvider } from '@nextui-org/react';
-import { auth } from '@/app/api/auth/auth';
+import { ThemeProvider } from 'next-themes';
+import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
   title: 'KidsBook Adventures',
   description: 'Devient le héros de tes aventures !',
-};
-
-const fetchUser = async (userId: string) => {
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-  const response = await fetch(`${baseUrl}/api/user/${userId}`, {
-    method: 'GET',
-  });
-  if (!response.ok) {
-    throw new Error('Failed to fetch user');
-  }
-  const data = await response.json();
-  return data;
 };
 
 export default async function RootLayout({
@@ -29,27 +17,29 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const session = await auth();
-  if (!session) {
-    return <div>Veuillez vous connecter</div>;
-  }
-  if (session) {
-    const userId = session?.user?.id || 'Default Id';
-    console.log(userId);
-  }
-  const user = await fetchUser(session?.user?.id || 'Default Id');
-  if (!user) {
-    return <div>Failed to fetch user</div>;
-  }
+  const themes = [
+    'neutralTheme',
+    'violetTheme',
+    'pinkTheme',
+    'blueTheme',
+    'greenTheme',
+    'yellowTheme',
+    'orangeTheme',
+    'redTheme',
+    'brownTheme',
+    'grayTheme',
+  ];
 
   return (
-    <html lang="fr">
-      <body className={`${jua.variable} ${nunito.variable}`}>
+    <html lang="fr" className=" bg-no-repeat bg-cover ">
+      <body className={`${jua.variable} ${nunito.variable}  text-content1`}>
         <NextUIProvider>
-          <AuthProvider>
-            <Header userId={user?.id} />
-            <main className="min-h-screen m-24">{children}</main>
-          </AuthProvider>
+          <ThemeProvider attribute="class" enableSystem={false} defaultTheme="neutralTheme" themes={themes}>
+            <AuthProvider>
+              <Header />
+              <main className="min-h-screen py-16 md:py-24 md:px-12  relative ">{children}</main>
+            </AuthProvider>
+          </ThemeProvider>
         </NextUIProvider>
       </body>
     </html>

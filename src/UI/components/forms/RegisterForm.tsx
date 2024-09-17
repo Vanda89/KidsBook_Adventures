@@ -102,21 +102,26 @@ const RegisterForm = () => {
     }
   };
 
-  const errorStyle = `text-red-600 text-xs ml-1`;
+  const labelStyle = 'font-bold mb-2 group-data-[filled-within=true]:text-content1';
+  const inputStyle =
+    'font-600 text-base group-data-[has-value=true]:text-content1 input:-webkit-autofill:text-white placeholder:text-sm group-data-[filled-within=true]:text-content1';
+  const clearButton = 'right-2';
+  const errorMessage = 'text-rose-500 text-xs ml-1 mt-1.5';
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-5/6 md:w-1/2 xl:w-1/3 py-12 px-12 border-2 rounded-xl flex flex-col gap-5 ">
+      className="formw-5/6 md:w-1/2 xl:w-1/3 py-12 px-12 border-2 border-secondary-200 bg-content2 rounded-xl flex flex-col gap-5 ">
       <div className="name flex flex-col gap-2">
         <Input
           autoFocus
           isClearable
           isRequired
           classNames={{
-            label: 'font-bold mb-2',
-            input: 'font-600 text-base',
-            errorMessage: 'text-rose-500 text-xs ml-1',
+            label: labelStyle,
+            input: inputStyle,
+            clearButton: clearButton,
+            errorMessage: errorMessage,
           }}
           type="text"
           label="Prénom"
@@ -126,6 +131,7 @@ const RegisterForm = () => {
           variant="underlined"
           {...register('name')}
           errorMessage={errors.name?.message}
+          aria-errormessage={errors.name?.message}
           isInvalid={!!errors.name}
         />
       </div>
@@ -134,10 +140,10 @@ const RegisterForm = () => {
           isClearable
           isRequired
           classNames={{
-            label: 'font-bold mb-2',
-            input: 'font-600 text-base ',
-            clearButton: 'right-2',
-            errorMessage: 'text-rose-500 text-xs ml-1',
+            label: labelStyle,
+            input: inputStyle,
+            clearButton: clearButton,
+            errorMessage: errorMessage,
           }}
           type="email"
           label="Email"
@@ -147,6 +153,7 @@ const RegisterForm = () => {
           variant="underlined"
           {...register('email')}
           errorMessage={errors.email?.message}
+          aria-errormessage={errors.email?.message}
           isInvalid={!!errors.email}
         />
       </div>
@@ -158,6 +165,7 @@ const RegisterForm = () => {
           placeholder="Entrez un mot de passe"
           register={register('password')}
           error={errors.password?.message}
+          aria-errormessage={errors.password?.message}
         />
       </div>
 
@@ -168,6 +176,7 @@ const RegisterForm = () => {
           placeholder="Confirmez votre mot de passe"
           register={register('confirmPassword')}
           error={errors.confirmPassword?.message}
+          aria-errormessage={errors.confirmPassword?.message}
         />
       </div>
 
@@ -175,8 +184,16 @@ const RegisterForm = () => {
         <Controller
           name="dateOfBirth"
           control={control}
+          aria-label="Date de naissance"
           render={({ field: { onChange, value, onBlur } }) => (
-            <DatePickerInput value={value} onChange={onChange} onBlur={onBlur} error={errors.dateOfBirth?.message} />
+            <DatePickerInput
+              value={value}
+              onChange={onChange}
+              onBlur={onBlur}
+              error={errors.dateOfBirth?.message}
+              aria-errormessage={errors.dateOfBirth?.message}
+              placeholder="jj/mm/aaaa"
+            />
           )}
         />
       </div>
@@ -185,6 +202,7 @@ const RegisterForm = () => {
         type="submit"
         variant="flat"
         size="md"
+        aria-label="S'enregistrer"
         radius="md"
         disabled={!isValid}
         className={`disabled:cursor-not-allowed disabled:bg-gray-400 max-w-32 mt-12 mx-auto text-white bg-teal-500 font-bold`}>

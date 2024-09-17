@@ -29,10 +29,10 @@ const BooksList = ({ books }: { books: Book[] }) => {
       : null,
   }));
 
-  const bookCover = '/assets/images/poster-mountain-adventure.jpg';
+  const bookCover = '/assets/images/poster.png';
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-28 font-nunito">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-28 font-nunito ">
       {' '}
       {formattedBooks.map((book) => (
         <Link key={book.id} href={`/books/${book.id}`} className="flex flex-col gap-6">
@@ -50,9 +50,9 @@ const BooksList = ({ books }: { books: Book[] }) => {
               alt={`Page de couverture du livre ${book.title}`}
               width={210}
               height={225}
-              style={{ width: '195px', height: '215px' }}
+              style={{ width: '194px', height: '213px' }}
               priority
-              className="absolute top-2.5 left-4 m-auto"
+              className="absolute top-3 left-4 m-auto"
             />
           </div>
           <div className="bookHeader flex flex-col">

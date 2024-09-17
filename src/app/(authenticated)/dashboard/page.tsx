@@ -27,7 +27,8 @@ const Dashboard = async () => {
   const books = await fetchBooks(userId);
 
   return (
-    <div className="flex flex-col items-center gap-24 lg:mx-24">
+    <div className="flex flex-col items-center gap-24 p-8 lg:mx-20 lg:py-10 relative border-secondary-300 border-2 rounded-xl ">
+      <div className="absolute top-0 bg-content2 opacity-30 w-full h-full rounded-xl z-[-1]"></div>
       <WelcomeMessage userName={userName} />
       <BooksList books={books} />
     </div>

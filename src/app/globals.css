@@ -2,32 +2,110 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+header {
+  @apply w-full gap-0 !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+html.neutralTheme {
+  background-image: url('/assets/images/backgrounds/neutral_bg.png');
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+html.violetTheme {
+  background-image: url('/assets/images/backgrounds/violet_bg.png');
+}
+html.pinkTheme {
+  background-image: url('/assets/images/backgrounds/pink_bg.png');
+}
+html.blueTheme {
+  background-image: url('/assets/images/backgrounds/blue_bg.png');
+}
+html.greenTheme {
+  background-image: url('/assets/images/backgrounds/green_bg.png');
+}
+html.yellowTheme {
+  background-image: url('/assets/images/backgrounds/yellow_bg.png');
+}
+html.orangeTheme {
+  background-image: url('/assets/images/backgrounds/orange_bg.png');
+}
+html.redTheme {
+  background-image: url('/assets/images/backgrounds/red_bg.png');
+}
+html.brownTheme {
+  background-image: url('/assets/images/backgrounds/brown_bg.png');
+}
+html.grayTheme {
+  background-image: url('/assets/images/backgrounds/gray_bg.png');
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+html.neutralTheme input:autofill,
+html.neutralTheme input:-webkit-autofill {
+  @apply text-black !important;
+  -webkit-text-fill-color: black !important;
+}
+
+html.neutralTheme input:-moz-autofill {
+  @apply text-black;
+  -moz-text-fill-color: black !important;
+}
+
+html.violetTheme input:autofill,
+html.violetTheme input:-webkit-autofill {
+  @apply text-white !important;
+  -webkit-text-fill-color: white !important;
+}
+
+html.violetTheme input:-moz-autofill {
+  @apply text-white;
+  -moz-text-fill-color: white !important;
+}
+
+.form input:autofill {
+  @apply text-content1;
+}
+.form input:-webkit-autofill {
+  @apply text-content1;
+}
+.form input:-moz-autofill {
+  @apply text-content1;
+}
+
+.react-datepicker-wrapper {
+  @apply w-full;
+}
+
+.react-datepicker__view-calendar-icon input {
+  @apply pl-1 !important;
+}
+
+.react-datepicker__calendar-icon {
+  @apply right-0  cursor-pointer !important;
+}
+
+.react-datepicker {
+  @apply rounded-lg !important;
+}
+.react-datepicker h2 {
+  @apply capitalize !important;
+}
+
+.react-datepicker__month-container {
+  @apply rounded-lg !important;
+}
+
+.react-datepicker__header {
+  @apply flex flex-col gap-3 bg-gray-100 rounded-tl-lg rounded-tr-lg  !important;
+}
+
+.react-datepicker__month {
+  @apply mx-0 !important;
+}
+
+.react-datepicker__month-select,
+.react-datepicker__year-select {
+  @apply border border-black px-3 py-1 rounded-lg;
+}
+
+.react-datepicker__day-names {
+  @apply capitalize;
 }

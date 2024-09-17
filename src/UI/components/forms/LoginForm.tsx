@@ -31,7 +31,6 @@ const LoginForm = () => {
     formState: { errors, isValid },
   } = useForm<FormData>({
     resolver: zodResolver(loginSchema),
-    mode: 'onChange',
   });
 
   const router = useRouter();
@@ -67,22 +66,26 @@ const LoginForm = () => {
     }
   };
 
-  const errorStyle = `text-red-600 text-xs ml-1`;
+  const labelStyle = 'font-bold mb-2 group-data-[filled-within=true]:text-content1';
+  const inputStyle =
+    'font-600 text-base group-data-[has-value=true]:text-content1 input:-webkit-autofill:text-white placeholder:text-sm group-data-[filled-within=true]:text-content1';
+  const clearButton = 'right-2';
+  const errorMessage = 'text-rose-500 text-xs ml-1 mt-1.5';
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-5/6 md:w-1/2 xl:w-1/3 py-12 px-12 border-2 border-gray-700 rounded-xl flex flex-col gap-5 ">
-      <div className="email flex flex-col gap-2">
+      className="form w-5/6 md:w-1/2 xl:w-1/3 py-12 px-12 border-2  border-secondary-200 bg-content2  rounded-xl flex flex-col gap-5 ">
+      <div className="email flex flex-col gap-2 ">
         <Input
           autoFocus
           isClearable
           isRequired
           classNames={{
-            label: 'font-bold mb-2',
-            input: 'font-600 text-base ',
-            clearButton: 'right-2',
-            errorMessage: 'text-rose-500 text-xs ml-1 mt-1.5',
+            label: labelStyle,
+            input: inputStyle,
+            clearButton: clearButton,
+            errorMessage: errorMessage,
           }}
           type="email"
           label="Email"
@@ -92,6 +95,7 @@ const LoginForm = () => {
           variant="underlined"
           {...register('email')}
           errorMessage={errors.email?.message}
+          aria-errormessage={errors.email?.message}
           isInvalid={!!errors.email}
         />
       </div>
@@ -103,6 +107,7 @@ const LoginForm = () => {
           placeholder="Entrez votre mot de passe"
           register={register('password')}
           error={errors.password?.message}
+          aria-errormessage={errors.password?.message}
         />
       </div>
 
@@ -112,7 +117,7 @@ const LoginForm = () => {
         size="md"
         radius="md"
         disabled={!isValid}
-        className="disabled:bg-gray-400 disabled:cursor-not-allowed max-w-32 mt-12 mx-auto text-white bg-teal-500 font-bold">
+        className="bg-primary-500 disabled:bg-gray-400 disabled:cursor-not-allowed max-w-32 mt-12 mx-auto text-secondary-100  font-bold">
         Se connecter
       </Button>
     </form>
